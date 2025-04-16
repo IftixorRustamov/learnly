@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../core/utils/utils_export.dart';
 
 class ProfileInfoWg extends StatelessWidget {
@@ -43,14 +46,14 @@ class ProfileInfoWg extends StatelessWidget {
           ),
           Text(
             name,
-            style: AppTextStyles.urbanist.bold(
+            style: sl<UrbanistTextStyles>().bold(
               color: AppColors.black,
               fontSize: 24,
             ),
           ),
           Text(
             gmail,
-            style: AppTextStyles.urbanist.semiBold(
+            style: sl<UrbanistTextStyles>().semiBold(
               color: AppColors.black,
               fontSize: 14,
             ),

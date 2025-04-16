@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../../core/common/constants/colors/app_colors.dart';
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../core/di/service_locator.dart';
 
 class CompletedCourseCard extends StatelessWidget {
   final String imagePath;
@@ -75,7 +76,7 @@ class CompletedCourseCard extends StatelessWidget {
                     title,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: AppTextStyles.urbanist.bold(
+                    style: sl<UrbanistTextStyles>().bold(
                       color: isDarkMode ? AppColors.white : AppColors.black,
                       fontSize: 18,
                     ),
@@ -83,7 +84,7 @@ class CompletedCourseCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     duration,
-                    style: AppTextStyles.urbanist.medium(
+                    style: sl<UrbanistTextStyles>().medium(
                       color: AppColors.greyScale.grey700,
                       fontSize: 14, // CourseCard bilan bir xil matn hajmi
                     ),
@@ -98,7 +99,7 @@ class CompletedCourseCard extends StatelessWidget {
               percent: progress / 100,
               center: Text(
                 "${progress.toInt()}%",
-                style: AppTextStyles.urbanist.bold(
+                style: sl<UrbanistTextStyles>().bold(
                   color: isDarkMode ? AppColors.white : AppColors.black,
                   fontSize: 18, // Foiz shrift hajmi
                 ),

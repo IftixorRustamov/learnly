@@ -3,9 +3,9 @@ import 'package:iconly/iconly.dart';
 import 'package:kursol/features/home/features/search/search_result_body.dart';
 import 'package:kursol/features/home/features/search/search_history_body.dart';
 import '../../../../core/common/constants/colors/app_colors.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../core/common/widgets/custom_choice_chip_wg.dart';
 import '../../../../core/utils/responsiveness/app_responsive.dart';
-import '../../../../core/utils/textstyles/urbanist_textstyles.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

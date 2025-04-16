@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
-import 'package:kursol/core/utils/textstyles/urbanist_textstyles.dart';
 
 import '../../../../core/utils/responsiveness/app_responsive.dart';
+import '../../../di/service_locator.dart';
+import '../../textstyles/urbanist_textstyles.dart';
 
 class BaseContactCardWg extends StatelessWidget {
   final String imagePath;
@@ -40,14 +41,14 @@ class BaseContactCardWg extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: UrbanistTextStyles().bold(
+                    style: sl<UrbanistTextStyles>().bold(
                       fontSize: 18,
                       color: AppColors.greyScale.grey900,
                     ),
                   ),
                   Text(
                     subtitle,
-                    style: UrbanistTextStyles().medium(
+                    style:sl<UrbanistTextStyles>().medium(
                       fontSize: 14,
                       color: AppColors.greyScale.grey700,
                     ),

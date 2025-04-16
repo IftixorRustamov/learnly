@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/common/constants/constants_export.dart';
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../core/common/widgets/widgets_export.dart';
+import '../../../core/di/service_locator.dart';
+import '../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../core/utils/utils_export.dart';
 
 class TransactionsCardWg extends StatelessWidget {
@@ -28,7 +31,7 @@ class TransactionsCardWg extends StatelessWidget {
           title,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
-          style: AppTextStyles.urbanist.bold(
+          style: sl<UrbanistTextStyles>().bold(
             color: AppColors.black,
             fontSize: 18,
           ),
@@ -43,7 +46,7 @@ class TransactionsCardWg extends StatelessWidget {
           ),
           child: Text(
             "Paid", // dummy  code
-            style: AppTextStyles.urbanist.semiBold(
+            style: sl<UrbanistTextStyles>().semiBold(
               color: AppColors.primary(),
               fontSize: 10,
             ),
@@ -61,7 +64,7 @@ class TransactionsCardWg extends StatelessWidget {
         onPressed: onButtonPressed,
         child: Text(
           AppStrings.eReceipt,
-          style: AppTextStyles.urbanist.semiBold(
+          style: sl<UrbanistTextStyles>().semiBold(
             color: AppColors.white,
             fontSize: 14,
           ),

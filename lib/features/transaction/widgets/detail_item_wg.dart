@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
+
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../core/di/service_locator.dart';
 
 class DetailItem extends StatelessWidget {
   final String label;
@@ -24,7 +26,7 @@ class DetailItem extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.urbanist.medium(
+          style: sl<UrbanistTextStyles>().medium(
             color: AppColors.greyScale.grey700,
             fontSize: 14,
           ),
@@ -43,7 +45,7 @@ class DetailItem extends StatelessWidget {
                 ),
                 child: Text(
                   value,
-                  style: AppTextStyles.urbanist.semiBold(
+                  style: sl<UrbanistTextStyles>().semiBold(
                     color: AppColors.primary(),
                     fontSize: 10,
                   ),
@@ -52,7 +54,7 @@ class DetailItem extends StatelessWidget {
             else
               Text(
                 value,
-                style: AppTextStyles.urbanist.semiBold(
+                style: sl<UrbanistTextStyles>().semiBold(
                   color: AppColors.greyScale.grey800,
                   fontSize: 16,
                 ),

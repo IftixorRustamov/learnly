@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/utils/utils_export.dart';
 
 Widget buildDateField(
@@ -16,7 +18,7 @@ Widget buildDateField(
           filled: true,
           fillColor: AppColors.greyScale.grey50,
           hintText: "Date of Birth",
-          hintStyle: AppTextStyles.urbanist.regular(
+          hintStyle: sl<UrbanistTextStyles>().regular(
             color: AppColors.greyScale.grey500,
             fontSize: 14,
           ),
@@ -39,7 +41,7 @@ Widget buildDateField(
               },
               icon: Icon(IconlyLight.calendar)),
           suffixIconColor: AppColors.greyScale.grey500),
-      style: AppTextStyles.urbanist.semiBold(
+      style: sl<UrbanistTextStyles>().semiBold(
         color: AppColors.greyScale.grey900,
         fontSize: 14,
       ),

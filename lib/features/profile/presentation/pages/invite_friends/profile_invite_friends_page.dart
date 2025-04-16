@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:kursol/core/common/sizes/sizes.dart';
 
 import '../../../../../core/common/constants/constants_export.dart';
+import '../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../core/di/service_locator.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../core/utils/utils_export.dart';
 
 class ProfileInviteFriendsPage extends StatefulWidget {
@@ -49,7 +52,7 @@ class _ProfileInviteFriendsPageState extends State<ProfileInviteFriendsPage> {
                 ),
                 label: Text(
                   isInvited ? AppStrings.invited : AppStrings.invite,
-                  style: AppTextStyles.urbanist.semiBold(
+                  style: sl<UrbanistTextStyles>().semiBold(
                     color: isInvited ? AppColors.primary() : AppColors.white,
                     fontSize: 14,
                   ),

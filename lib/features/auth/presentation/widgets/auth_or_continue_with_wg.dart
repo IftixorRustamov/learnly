@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/gen/assets.gen.dart';
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../core/utils/utils_export.dart';
 import 'auth_sign_in_card.dart';
 
@@ -29,8 +32,7 @@ class AuthOrContinueWithWg extends StatelessWidget {
             divider,
             Text(
               AppStrings.orContinueWith,
-              style: AppTextStyles.urbanist
-                  .semiBold(color: AppColors.greyScale.grey700, fontSize: 18),
+              style: sl<UrbanistTextStyles>().semiBold(color: AppColors.greyScale.grey700, fontSize: 18),
             ),
             divider,
           ],

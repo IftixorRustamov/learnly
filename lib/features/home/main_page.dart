@@ -4,6 +4,9 @@ import 'package:iconly/iconly.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 
 import '../../core/common/constants/constants_export.dart';
+import '../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../core/di/service_locator.dart';
+import '../../core/utils/responsiveness/app_responsive.dart';
 import '../../core/utils/utils_export.dart';
 
 class MainPage extends StatefulWidget {
@@ -83,11 +86,11 @@ class _MainPageState extends State<MainPage> {
           selectedItemColor: AppColors.primary(),
           unselectedItemColor: AppColors.greyScale.grey500,
           onTap: (int index) => goOtherTab(context, index),
-          selectedLabelStyle: AppTextStyles.urbanist.bold(
+          selectedLabelStyle: sl<UrbanistTextStyles>().bold(
             color: AppColors.primary(),
             fontSize: 10,
           ),
-          unselectedLabelStyle: AppTextStyles.urbanist.medium(
+          unselectedLabelStyle: sl<UrbanistTextStyles>().medium(
             color: AppColors.greyScale.grey500,
             fontSize: 10,
           ),

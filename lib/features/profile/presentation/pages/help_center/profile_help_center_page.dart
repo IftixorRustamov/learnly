@@ -5,6 +5,7 @@ import 'package:kursol/features/profile/presentation/pages/help_center/widgets/f
 
 import '../../../../../core/common/constants/constants_export.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../core/utils/utils_export.dart';
 
 class ProfileHelpCenterPage extends StatefulWidget {

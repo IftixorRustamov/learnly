@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kursol/core/common/textstyles/urbanist_textstyles.dart';
 
+import '../../di/service_locator.dart';
 import '../../utils/responsiveness/app_responsive.dart';
-import '../../utils/textstyles/app_textstyles.dart';
 import '../constants/colors/app_colors.dart';
 
 class DefaultButtonWg extends StatelessWidget {
@@ -24,7 +25,7 @@ class DefaultButtonWg extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           title,
-          style: AppTextStyles.urbanist.bold(
+          style: sl<UrbanistTextStyles>().bold(
             color: AppColors.white,
             fontSize: 16,
           ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
-import 'package:kursol/core/utils/textstyles/urbanist_textstyles.dart';
 import 'package:kursol/features/home/features/search/courses_body.dart';
 
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../core/utils/responsiveness/app_responsive.dart';
 import 'not_found_body.dart';
 

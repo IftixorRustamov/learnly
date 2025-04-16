@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import '../../../utils/textstyles/app_textstyles.dart';
+import '../../../di/service_locator.dart';
 import '../../constants/colors/app_colors.dart';
+import '../../textstyles/urbanist_textstyles.dart';
 
 class ActionAppBarWg extends StatelessWidget implements PreferredSizeWidget {
   const ActionAppBarWg({
@@ -28,7 +29,7 @@ class ActionAppBarWg extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       title: Text(
         titleText ?? "",
-        style: AppTextStyles.urbanist.bold(
+        style: sl<UrbanistTextStyles>().bold(
           color: AppColors.black,
           fontSize: 24,
         ),

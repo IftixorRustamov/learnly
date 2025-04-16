@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/config/gen/assets.gen.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import '../../../utils/textstyles/app_textstyles.dart';
+import '../../../di/service_locator.dart';
 import '../../constants/colors/app_colors.dart';
+import '../../textstyles/urbanist_textstyles.dart';
 
 class DefaultAppBarWg extends StatelessWidget implements PreferredSizeWidget {
   const DefaultAppBarWg({
@@ -30,7 +31,7 @@ class DefaultAppBarWg extends StatelessWidget implements PreferredSizeWidget {
       leading: Assets.images.logo.image(width: appW(32), height: appH(32)),
       title: Text(
         titleText,
-        style: AppTextStyles.urbanist.bold(
+        style:sl<UrbanistTextStyles>().bold(
           color: AppColors.black,
           fontSize: 24,
         ),

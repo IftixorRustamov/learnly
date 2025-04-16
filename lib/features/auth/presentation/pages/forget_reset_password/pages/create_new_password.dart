@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/routes/route_paths.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 import '../../profile/widgets/show_succes_dialog.dart';
 import '../widgets/build_password_field.dart';
@@ -49,7 +52,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
               Text(
                 'Create Your New Password',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.urbanist
+                style:sl<UrbanistTextStyles>()
                     .regular(color: AppColors.greyScale.grey900, fontSize: 18),
               ),
               SizedBox(height: appH(24)),
@@ -88,7 +91,7 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                   ),
                   Text(
                     "Remember me",
-                    style: AppTextStyles.urbanist.regular(
+                    style: sl<UrbanistTextStyles>().regular(
                         color: AppColors.greyScale.grey900, fontSize: 18),
                   ),
                 ],

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../../../core/di/service_locator.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 
 class ProfilePaymentCardWg extends StatelessWidget {
@@ -34,7 +37,7 @@ class ProfilePaymentCardWg extends StatelessWidget {
               Image.asset(image, height: appH(32), width: appW(32)),
               Text(
                 text,
-                style: AppTextStyles.urbanist.bold(
+                style: sl<UrbanistTextStyles>().bold(
                   color: AppColors.greyScale.grey900,
                   fontSize: 18,
                 ),
@@ -43,7 +46,7 @@ class ProfilePaymentCardWg extends StatelessWidget {
           ),
           Text(
             status ?? "",
-            style: AppTextStyles.urbanist.bold(
+            style: sl<UrbanistTextStyles>().bold(
               color: AppColors.primary(),
               fontSize: 18,
             ),

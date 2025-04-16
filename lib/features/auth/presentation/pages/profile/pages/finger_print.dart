@@ -4,7 +4,10 @@ import 'package:kursol/core/routes/route_paths.dart' show RoutePaths;
 import 'package:local_auth/local_auth.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../../core/di/service_locator.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 import '../widgets/show_succes_dialog.dart';
 
@@ -100,8 +103,7 @@ class _FingerprintState extends State<Fingerprint> {
             Text(
               AppStrings.addFingerPrint,
               textAlign: TextAlign.center,
-              style: AppTextStyles.urbanist
-                  .regular(color: AppColors.greyScale.grey900, fontSize: 18),
+              style: sl<UrbanistTextStyles>().regular(color: AppColors.greyScale.grey900, fontSize: 18),
             ),
             Image.asset(
               "assets/images/fingerprint.png",
@@ -111,8 +113,7 @@ class _FingerprintState extends State<Fingerprint> {
             Text(
               "Please put your finger on the fingerprint scanner to get started.",
               textAlign: TextAlign.center,
-              style: AppTextStyles.urbanist
-                  .regular(color: AppColors.greyScale.grey900, fontSize: 18),
+              style:sl<UrbanistTextStyles>().regular(color: AppColors.greyScale.grey900, fontSize: 18),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -126,7 +127,7 @@ class _FingerprintState extends State<Fingerprint> {
                     ),
                     onPressed: () => showSuccessDialog(context),
                     child: Text("Skip",
-                        style: AppTextStyles.urbanist.bold(
+                        style: sl<UrbanistTextStyles>().bold(
                             color: AppColors.primary.blue500, fontSize: 16)),
                   ),
                 ),

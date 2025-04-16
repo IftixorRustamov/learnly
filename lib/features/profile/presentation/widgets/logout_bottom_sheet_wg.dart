@@ -4,6 +4,9 @@ import 'package:kursol/core/common/sizes/sizes.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../core/utils/utils_export.dart';
 
 void showLogoutModal(BuildContext context) {
@@ -21,7 +24,7 @@ void showLogoutModal(BuildContext context) {
         children: [
           Text(
             AppStrings.logOut,
-            style: AppTextStyles.urbanist.bold(
+            style: sl<UrbanistTextStyles>().bold(
               color: AppColors.red,
               fontSize: 24,
             ),
@@ -29,7 +32,7 @@ void showLogoutModal(BuildContext context) {
           Divider(thickness: 1, color: AppColors.greyScale.grey200),
           Text(
             AppStrings.wantToLogOut,
-            style: AppTextStyles.urbanist.bold(
+            style: sl<UrbanistTextStyles>().bold(
               color: AppColors.greyScale.grey800,
               fontSize: 24,
             ),
@@ -50,7 +53,7 @@ void showLogoutModal(BuildContext context) {
                     ),
                     child: Text(
                       AppStrings.cancel,
-                      style: AppTextStyles.urbanist.bold(
+                      style: sl<UrbanistTextStyles>().bold(
                         color: AppColors.primary(),
                         fontSize: 16,
                       ),
@@ -74,7 +77,7 @@ void showLogoutModal(BuildContext context) {
                     ),
                     child: Text(
                       AppStrings.yesLogOut,
-                      style: AppTextStyles.urbanist.bold(
+                      style: sl<UrbanistTextStyles>().bold(
                         color: AppColors.white,
                         fontSize: 16,
                       ),

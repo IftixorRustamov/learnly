@@ -6,6 +6,7 @@ import 'package:kursol/core/routes/route_paths.dart';
 import '../../../../../config/gen/assets.gen.dart' show Assets;
 import '../../../../../core/common/constants/constants_export.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../core/utils/utils_export.dart';
 import 'widgets/boarding_widget.dart';
 

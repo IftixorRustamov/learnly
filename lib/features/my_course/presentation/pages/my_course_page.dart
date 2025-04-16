@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:kursol/core/common/widgets/courses_card_wg.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../core/common/widgets/widgets_export.dart';
+import '../../../../core/di/service_locator.dart';
 import '../../../../core/utils/utils_export.dart';
 import '../../data/repositories/dummy_courses.dart';
 
@@ -79,7 +81,7 @@ class CourseListView extends StatelessWidget {
           courseTitle: course.title,
           subWidget: Text(
             course.duration,
-            style: AppTextStyles.urbanist.medium(
+            style: sl<UrbanistTextStyles>().medium(
               color: AppColors.greyScale.grey700,
               fontSize: 14,
             ),

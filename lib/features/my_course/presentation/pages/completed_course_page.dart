@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
 import 'package:kursol/features/my_course/presentation/widgets/sertificate_wg.dart';
 import 'package:kursol/features/my_course/presentation/widgets/lesson_list_widget.dart';
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../core/common/widgets/widgets_export.dart';
+import '../../../../core/di/service_locator.dart';
 import '../../data/repositories/dummy_course_details.dart';
 
 class CompletedCoursePage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _CompletedCoursePageState extends State<CompletedCoursePage>
         appBar: AppBar(
           title: Text(
             courseDetail.title,
-            style: AppTextStyles.urbanist.bold(
+            style: sl<UrbanistTextStyles>().bold(
               color: isDarkMode ? AppColors.white : AppColors.black,
               fontSize: 22,
             ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/routes/route_paths.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -42,7 +45,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Text(
                 AppStrings.selectWhichContact,
                 textAlign: TextAlign.left,
-                style: AppTextStyles.urbanist
+                style: sl<UrbanistTextStyles>()
                     .medium(color: AppColors.greyScale.grey900, fontSize: 18),
               ),
               _buildOption(
@@ -113,13 +116,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.urbanist
+                  style: sl<UrbanistTextStyles>()
                       .medium(color: AppColors.greyScale.grey600, fontSize: 14),
                 ),
                 Text(
                   subtitle,
-                  style: AppTextStyles.urbanist
-                      .bold(color: AppColors.black, fontSize: 16),
+                  style: sl<UrbanistTextStyles>().bold(color: AppColors.black, fontSize: 16),
                 ),
               ],
             ),

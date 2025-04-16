@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
+
+import '../../di/service_locator.dart';
+import '../textstyles/urbanist_textstyles.dart';
 
 class CustomChoiceChipWg extends StatelessWidget {
   final int selectedIndex;
@@ -27,7 +29,7 @@ class CustomChoiceChipWg extends StatelessWidget {
       child: ChoiceChip(
         label: Text(
           label,
-          style: AppTextStyles.urbanist.semiBold(
+          style: sl<UrbanistTextStyles>().semiBold(
             color:
                 selectedIndex == index ? AppColors.white : AppColors.primary(),
             fontSize: 16,

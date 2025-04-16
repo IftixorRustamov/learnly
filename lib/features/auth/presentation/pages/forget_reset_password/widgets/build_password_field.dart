@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../../../core/common/constants/colors/app_colors.dart';
-import '../../../../../../core/utils/textstyles/app_textstyles.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../../../core/di/service_locator.dart';
 
 Widget buildPasswordField({
   required String hintText,
@@ -15,7 +16,7 @@ Widget buildPasswordField({
       filled: true,
       fillColor: AppColors.greyScale.grey50,
       hintText: hintText,
-      hintStyle: AppTextStyles.urbanist.regular(
+      hintStyle: sl<UrbanistTextStyles>().regular(
         color: AppColors.black,
         fontSize: 14,
       ),
@@ -31,7 +32,7 @@ Widget buildPasswordField({
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
     ),
-    style: AppTextStyles.urbanist.semiBold(
+    style: sl<UrbanistTextStyles>().semiBold(
       color: AppColors.greyScale.grey900,
       fontSize: 14,
     ),

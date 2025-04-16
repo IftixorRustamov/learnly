@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kursol/features/my_course/presentation/widgets/lesson_list_widget.dart';
 import '../../../../core/common/constants/constants_export.dart';
 import '../../../../core/common/widgets/widgets_export.dart';
+import '../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../core/utils/utils_export.dart';
 import '../../data/repositories/dummy_course_details.dart';
 import '../../data/models/course_model.dart';

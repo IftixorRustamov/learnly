@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
+
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../../../core/di/service_locator.dart';
 
 class HelpCenterContainerWg extends StatelessWidget {
   final String title;
@@ -29,7 +31,7 @@ class HelpCenterContainerWg extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.urbanist.bold(
+            style: sl<UrbanistTextStyles>().bold(
               color: AppColors.greyScale.grey900,
               fontSize: 18,
             ),

@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../../core/common/constants/constants_export.dart';
+import '../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../core/di/service_locator.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../core/utils/utils_export.dart';
 import '../../widgets/profile_blank_container_wg.dart';
 
@@ -96,7 +99,7 @@ class PaymentAddNewCardPage extends StatelessWidget {
   }
 }
 
-final _textStyle = AppTextStyles.urbanist.semiBold(
+final _textStyle = sl<UrbanistTextStyles>().semiBold(
   color: AppColors.greyScale.grey900,
   fontSize: 14,
 );
@@ -107,7 +110,7 @@ Widget _customLayout({required String title, required Widget widget}) => Column(
       children: [
         Text(
           title,
-          style: AppTextStyles.urbanist.bold(
+          style: sl<UrbanistTextStyles>().bold(
             color: AppColors.greyScale.grey900,
             fontSize: 18,
           ),

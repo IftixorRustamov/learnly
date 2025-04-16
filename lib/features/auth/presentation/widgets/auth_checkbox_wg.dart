@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
 import '../../../../core/utils/utils_export.dart';
 
 class AuthCheckboxWg extends StatelessWidget {
@@ -24,8 +26,7 @@ class AuthCheckboxWg extends StatelessWidget {
           onChanged: onChanged,
         ),
         Text(AppStrings.rememberMe,
-            style: AppTextStyles.urbanist
-                .semiBold(color: AppColors.greyScale.grey900, fontSize: 14)),
+            style: sl<UrbanistTextStyles>().semiBold(color: AppColors.greyScale.grey900, fontSize: 14)),
       ],
     );
   }

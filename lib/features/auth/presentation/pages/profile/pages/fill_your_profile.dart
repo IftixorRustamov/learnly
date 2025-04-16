@@ -9,7 +9,10 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:kursol/core/routes/route_paths.dart' show RoutePaths;
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../../core/di/service_locator.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 import '../widgets/build_date_field.dart';
 import '../widgets/build_text_field.dart';
@@ -116,7 +119,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                 showDropdownIcon: false,
                 decoration: InputDecoration(
                   hintText: "Phone Number",
-                  hintStyle: AppTextStyles.urbanist.regular(
+                  hintStyle: sl<UrbanistTextStyles>().regular(
                     color: AppColors.greyScale.grey500,
                     fontSize: 14,
                   ),
@@ -128,7 +131,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none),
                 ),
-                style: AppTextStyles.urbanist.semiBold(
+                style: sl<UrbanistTextStyles>().semiBold(
                   color: AppColors.greyScale.grey900,
                   fontSize: 14,
                 ),
@@ -156,7 +159,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
           fillColor: AppColors.greyScale.grey50,
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
           hintText: "Gender",
-          hintStyle: AppTextStyles.urbanist.regular(
+          hintStyle: sl<UrbanistTextStyles>().regular(
             color: AppColors.greyScale.grey500,
             fontSize: 14,
           ),
@@ -175,7 +178,7 @@ class _FillProfilePageState extends State<FillProfilePage> {
             value: gender,
             child: Text(
               gender,
-              style: AppTextStyles.urbanist.semiBold(
+              style: sl<UrbanistTextStyles>().semiBold(
                 color: AppColors.greyScale.grey900,
                 fontSize: 14,
               ),

@@ -6,9 +6,10 @@ import 'package:kursol/core/common/widgets/app_bar/action_app_bar_wg.dart';
 import 'package:kursol/core/common/widgets/default_button_wg.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
 import '../widgets/auth_sign_in_button_wg.dart';
 import '../widgets/auth_sign_in_up_choice_wg.dart';
 
@@ -30,8 +31,7 @@ class AuthPage extends StatelessWidget {
             Assets.images.auth.image(),
             Text(AppStrings.letsYouIn,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.urbanist
-                    .bold(color: AppColors.greyScale.grey900, fontSize: 48)),
+                style: sl<UrbanistTextStyles>().bold(color: AppColors.greyScale.grey900, fontSize: 48)),
             // * Buttons
             Column(
               spacing: appH(24),
@@ -60,7 +60,7 @@ class AuthPage extends StatelessWidget {
                     _divider,
                     Text(
                       AppStrings.or,
-                      style: AppTextStyles.urbanist.semiBold(
+                      style: sl<UrbanistTextStyles>().semiBold(
                           color: AppColors.greyScale.grey700, fontSize: 18),
                     ),
                     _divider,

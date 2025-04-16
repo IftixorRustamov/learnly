@@ -5,8 +5,10 @@ import 'package:kursol/core/routes/route_names.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../core/common/widgets/widgets_export.dart';
-import '../../../../core/utils/utils_export.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/utils/responsiveness/app_responsive.dart';
 import '../widgets/logout_bottom_sheet_wg.dart';
 import '../widgets/profile_info_wg.dart';
 import '../widgets/profile_setting_row_wg.dart';
@@ -90,7 +92,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Text(
                         AppStrings.darkMode,
-                        style: AppTextStyles.urbanist.semiBold(
+                        style: sl<UrbanistTextStyles>().semiBold(
                           color: AppColors.black,
                           fontSize: 18,
                         ),
@@ -136,7 +138,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                     Text(
                       AppStrings.logOut,
-                      style: AppTextStyles.urbanist.semiBold(
+                      style: sl<UrbanistTextStyles>().semiBold(
                         color: AppColors.red,
                         fontSize: 18,
                       ),

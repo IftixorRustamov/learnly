@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../../core/di/service_locator.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 
 class CreateNewPin extends StatefulWidget {
@@ -61,8 +64,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
             Text(
               AppStrings.addPinNumber,
               textAlign: TextAlign.center,
-              style: AppTextStyles.urbanist
-                  .regular(color: AppColors.greyScale.grey900, fontSize: 18),
+              style: sl<UrbanistTextStyles>().regular(color: AppColors.greyScale.grey900, fontSize: 18),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +94,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
                         maxLength: 1,
-                        style: AppTextStyles.urbanist.bold(
+                        style: sl<UrbanistTextStyles>().bold(
                             color: AppColors.greyScale.grey900, fontSize: 24),
                         decoration: const InputDecoration(
                           counterText: "",
@@ -109,7 +111,7 @@ class _CreateNewPinState extends State<CreateNewPin> {
                     if (controllers[index].text.isNotEmpty)
                       Text(
                         '⚫',
-                        style: AppTextStyles.urbanist.bold(
+                        style: sl<UrbanistTextStyles>().bold(
                             color: AppColors.greyScale.grey900, fontSize: 24),
                       ),
                   ],

@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
 import 'package:kursol/core/routes/route_names.dart';
-import 'package:kursol/core/utils/textstyles/urbanist_textstyles.dart';
 import 'package:kursol/features/home/features/widgets/course_card_widget.dart';
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../core/common/widgets/custom_choice_chip_wg.dart';
 import '../../../core/utils/responsiveness/app_responsive.dart';
 

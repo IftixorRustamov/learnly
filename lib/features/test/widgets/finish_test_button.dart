@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
+
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../core/di/service_locator.dart';
 
 class FinishTestButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -23,7 +25,7 @@ class FinishTestButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           "Finish Test",
-          style: AppTextStyles.urbanist.bold(
+          style: sl<UrbanistTextStyles>().bold(
             color: AppColors.white,
             fontSize: appH(16),
           ),

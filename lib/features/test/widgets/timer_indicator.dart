@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
+
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../core/di/service_locator.dart';
 
 class TestAppBarWithTimer extends StatefulWidget implements PreferredSizeWidget {
   final String subject;
@@ -69,7 +71,7 @@ class _TestAppBarWithTimerState extends State<TestAppBarWithTimer> {
       centerTitle: false,
       title: Text(
         widget.subject,
-        style: AppTextStyles.urbanist.bold(
+        style: sl<UrbanistTextStyles>().bold(
           color: isDarkMode ? AppColors.white : AppColors.black,
           fontSize: 24,
         ),

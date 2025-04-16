@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../../core/common/constants/colors/app_colors.dart';
+import '../../di/service_locator.dart';
 import '../../utils/responsiveness/app_responsive.dart';
-import '../../utils/textstyles/app_textstyles.dart';
+import '../textstyles/urbanist_textstyles.dart';
 
 class CourseCard extends StatelessWidget {
   final VoidCallback onTap;
@@ -64,7 +65,7 @@ class CourseCard extends StatelessWidget {
                     courseTitle,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: AppTextStyles.urbanist.bold(
+                    style: sl<UrbanistTextStyles>().bold(
                       color: isDarkMode ? AppColors.white : AppColors.black,
                       fontSize: 18,
                     ),
@@ -83,7 +84,7 @@ class CourseCard extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         "$courseDuration",
-                        style: AppTextStyles.urbanist.bold(
+                        style: sl<UrbanistTextStyles>().bold(
                           color: isDarkMode ? AppColors.white : AppColors.greyScale.grey700,
                           fontSize: 14,
                         ),

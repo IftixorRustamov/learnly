@@ -5,6 +5,7 @@ import 'package:kursol/core/common/sizes/sizes.dart';
 
 import '../../../core/common/constants/constants_export.dart';
 import '../../../core/common/widgets/widgets_export.dart';
+import '../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../core/utils/utils_export.dart';
 import '../widgets/detail_card_wg.dart';
 import '../widgets/detail_item_wg.dart';

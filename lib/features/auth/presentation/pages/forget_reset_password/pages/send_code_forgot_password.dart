@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../../core/di/service_locator.dart';
+import '../../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../../core/utils/utils_export.dart';
 
 class SendCodeForgotPassword extends StatefulWidget {
@@ -61,8 +64,7 @@ class _SendCodeForgotPasswordState extends State<SendCodeForgotPassword> {
             Text(
               'Code has been send to +1 111 ******99',
               textAlign: TextAlign.center,
-              style: AppTextStyles.urbanist
-                  .regular(color: AppColors.greyScale.grey900, fontSize: 18),
+              style: sl<UrbanistTextStyles>().regular(color: AppColors.greyScale.grey900, fontSize: 18),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,8 +91,7 @@ class _SendCodeForgotPasswordState extends State<SendCodeForgotPassword> {
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     maxLength: 1,
-                    style: AppTextStyles.urbanist
-                        .bold(color: AppColors.greyScale.grey900, fontSize: 24),
+                    style: sl<UrbanistTextStyles>().bold(color: AppColors.greyScale.grey900, fontSize: 24),
                     decoration: const InputDecoration(
                       counterText: "",
                       border: InputBorder.none,
@@ -108,8 +109,7 @@ class _SendCodeForgotPasswordState extends State<SendCodeForgotPassword> {
             Text(
               'Resend code in 55 s',
               textAlign: TextAlign.center,
-              style: AppTextStyles.urbanist
-                  .regular(color: AppColors.greyScale.grey900, fontSize: 18),
+              style: sl<UrbanistTextStyles>().regular(color: AppColors.greyScale.grey900, fontSize: 18),
             ),
             DefaultButtonWg(
                 title: 'Verify',

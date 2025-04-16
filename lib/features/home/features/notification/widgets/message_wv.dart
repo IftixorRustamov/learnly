@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/common/constants/colors/app_colors.dart';
+import '../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../core/utils/responsiveness/app_responsive.dart';
-import '../../../../../core/utils/textstyles/urbanist_textstyles.dart';
 
 class MessageWv extends StatelessWidget {
   final String imagePath;

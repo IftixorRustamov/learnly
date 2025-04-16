@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
+
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
 
 class CertificateWidget extends StatelessWidget {
   const CertificateWidget({super.key});
@@ -39,7 +41,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.018),
             Text(
               'Certificate of Completion',
-              style: AppTextStyles.urbanist.bold(
+              style: sl<UrbanistTextStyles>().bold(
                 fontSize: screenWidth * 0.055,
                 color: isDarkMode ? AppColors.white : AppColors.black,
               ),
@@ -47,7 +49,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.012),
             Text(
               'Presented to',
-              style: AppTextStyles.urbanist.regular(
+              style: sl<UrbanistTextStyles>().regular(
                 fontSize: screenWidth * 0.04,
                 color: isDarkMode ? AppColors.greyScale.grey300 : AppColors.greyScale.grey700,
               ),
@@ -55,7 +57,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.008),
             Text(
               'Andrew Ainsley',
-              style: AppTextStyles.urbanist.bold(
+              style: sl<UrbanistTextStyles>().bold(
                 fontSize: screenWidth * 0.06,
                 color: AppColors.primary.blue500,
               ),
@@ -63,7 +65,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.015),
             Text(
               'For the successful completion of',
-              style: AppTextStyles.urbanist.regular(
+              style: sl<UrbanistTextStyles>().regular(
                 fontSize: screenWidth * 0.04,
                 color: isDarkMode ? AppColors.greyScale.grey300 : AppColors.greyScale.grey700,
               ),
@@ -71,7 +73,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.008),
             Text(
               '3D Design Illustration Course',
-              style: AppTextStyles.urbanist.semiBold(
+              style: sl<UrbanistTextStyles>().semiBold(
                 fontSize: screenWidth * 0.05,
                 color: isDarkMode ? AppColors.white : AppColors.black,
               ),
@@ -79,7 +81,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.015),
             Text(
               'Issued on December 20, 2024',
-              style: AppTextStyles.urbanist.regular(
+              style: sl<UrbanistTextStyles>().regular(
                 fontSize: screenWidth * 0.035,
                 color: isDarkMode ? AppColors.greyScale.grey300 : AppColors.greyScale.grey700,
               ),
@@ -87,7 +89,7 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.005),
             Text(
               'ID: SK123456789',
-              style: AppTextStyles.urbanist.regular(
+              style: sl<UrbanistTextStyles>().regular(
                 fontSize: screenWidth * 0.035,
                 color: isDarkMode ? AppColors.greyScale.grey300 : AppColors.greyScale.grey700,
               ),
@@ -97,14 +99,14 @@ class CertificateWidget extends StatelessWidget {
             SizedBox(height: screenHeight * 0.008),
             Text(
               'James Anderson Lawren',
-              style: AppTextStyles.urbanist.bold(
+              style: sl<UrbanistTextStyles>().bold(
                 fontSize: screenWidth * 0.045,
                 color: AppColors.primary.blue500,
               ),
             ),
             Text(
               'Elera Courses Manager',
-              style: AppTextStyles.urbanist.regular(
+              style: sl<UrbanistTextStyles>().regular(
                 fontSize: screenWidth * 0.035,
                 color: isDarkMode ? AppColors.greyScale.grey300 : AppColors.greyScale.grey700,
               ),

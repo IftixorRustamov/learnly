@@ -4,7 +4,9 @@ import 'package:kursol/core/common/widgets/courses_card_wg.dart';
 import 'package:kursol/features/test/widgets/completed_card.dart';
 
 import '../../../core/common/constants/constants_export.dart';
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../core/common/widgets/widgets_export.dart';
+import '../../../core/di/service_locator.dart';
 import '../../../core/utils/utils_export.dart';
 
 class TestPage extends StatefulWidget {
@@ -106,7 +108,7 @@ class CourseListView extends StatelessWidget {
                 courseTitle: 'DTM',
                 subWidget: Text(
                   'Davlat Test Markazi',
-                  style: AppTextStyles.urbanist.medium(
+                  style: sl<UrbanistTextStyles>().medium(
                     color: AppColors.greyScale.grey700,
                     fontSize: 14,
                   ),
@@ -121,7 +123,7 @@ class CourseListView extends StatelessWidget {
                 courseTitle: 'SAT',
                 subWidget: Text(
                   'Akademik ingliz tili va matematika',
-                  style: AppTextStyles.urbanist.medium(
+                  style: sl<UrbanistTextStyles>().medium(
                     color: AppColors.greyScale.grey700,
                     fontSize: 14,
                   ),
@@ -136,7 +138,7 @@ class CourseListView extends StatelessWidget {
                 courseTitle: 'IELTS',
                 subWidget: Text(
                   'Reading, Listening, Writing, Speaking',
-                  style: AppTextStyles.urbanist.medium(
+                  style: sl<UrbanistTextStyles>().medium(
                     color: AppColors.greyScale.grey700,
                     fontSize: 14,
                   ),
@@ -151,7 +153,7 @@ class CourseListView extends StatelessWidget {
                 courseTitle: 'Avtotest',
                 subWidget: Text(
                   'Yo‘l harakati qoidalari',
-                  style: AppTextStyles.urbanist.medium(
+                  style: sl<UrbanistTextStyles>().medium(
                     color: AppColors.greyScale.grey700,
                     fontSize: 14,
                   ),

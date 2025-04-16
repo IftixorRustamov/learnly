@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../core/common/constants/constants_export.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
-import '../../../../../core/utils/utils_export.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../widgets/profile_setting_row_wg.dart';
 import '../../widgets/settings_switch_wg.dart';
 

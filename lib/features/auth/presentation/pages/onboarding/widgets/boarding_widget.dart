@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kursol/core/common/constants/colors/app_colors.dart';
+import 'package:kursol/core/common/textstyles/app_textstyles.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
-import 'package:kursol/core/utils/textstyles/app_textstyles.dart';
+import '../../../../../../core/di/service_locator.dart';
 
 class BoardingWidget extends StatelessWidget {
   final String text;
@@ -24,8 +25,7 @@ class BoardingWidget extends StatelessWidget {
           image,
           Text(text,
               textAlign: TextAlign.center,
-              style: AppTextStyles.urbanist
-                  .bold(color: AppColors.greyScale.grey900, fontSize: 40))
+              style: sl.get<AppTextStyles>().bold(color: AppColors.greyScale.grey900, fontSize: 40))
         ],
       ),
     );

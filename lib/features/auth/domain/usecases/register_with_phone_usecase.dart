@@ -8,7 +8,7 @@ class RegisterWithPhoneUseCase {
 
   RegisterWithPhoneUseCase(this._authRepository);
 
-  Future<ApiResponse<UserEntity>> call(
+  Future<ApiResponse> call(
     String phoneNumber,
     String password,
     String firstName,

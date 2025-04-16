@@ -4,7 +4,10 @@ import 'package:iconly/iconly.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/common/constants/constants_export.dart';
+import '../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../core/common/widgets/widgets_export.dart';
+import '../../../core/di/service_locator.dart';
+import '../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../core/utils/utils_export.dart';
 
 class TestDetailPage extends StatelessWidget {
@@ -63,14 +66,14 @@ class TestDetailPage extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTextStyles.urbanist.semiBold(
+            style: sl<UrbanistTextStyles>().semiBold(
               color: isDarkMode ? Colors.white : AppColors.black,
               fontSize: appH(18),
             ),
           ),
           Text(
             duration,
-            style: AppTextStyles.urbanist.semiBold(
+            style: sl<UrbanistTextStyles>().semiBold(
               color: AppColors.primary.blue500,
               fontSize: appH(16),
             ),
@@ -100,15 +103,14 @@ class TestDetailPage extends StatelessWidget {
               radius: appH(24),
               child: Text(
                 number,
-                style: AppTextStyles.urbanist
-                    .bold(color: AppColors.primary.blue500, fontSize: appH(18)),
+                style: sl<UrbanistTextStyles>().bold(color: AppColors.primary.blue500, fontSize: appH(18)),
               ),
             ),
             SizedBox(width: appW(16)),
             Expanded(
               child: Text(
                 title,
-                style: AppTextStyles.urbanist.semiBold(
+                style:sl<UrbanistTextStyles>().semiBold(
                     color: isDarkMode ? Colors.white : Colors.black87,
                     fontSize: appH(18)),
               ),

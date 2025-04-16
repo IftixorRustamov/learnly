@@ -6,7 +6,7 @@ import 'package:kursol/features/profile/presentation/pages/payment/widgets/profi
 
 import '../../../../../core/common/constants/constants_export.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
-import '../../../../../core/utils/utils_export.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 
 class ProfilePaymentPage extends StatelessWidget {
   const ProfilePaymentPage({super.key});

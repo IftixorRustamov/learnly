@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
+import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/utils/utils_export.dart';
 
 Widget buildTextField(String label, {IconData? suffixIcon}) {
@@ -11,7 +13,7 @@ Widget buildTextField(String label, {IconData? suffixIcon}) {
           filled: true,
           fillColor: AppColors.greyScale.grey50,
           hintText: label,
-          hintStyle: AppTextStyles.urbanist.regular(
+          hintStyle: sl<UrbanistTextStyles>().regular(
             color: AppColors.greyScale.grey500,
             fontSize: 14,
           ),
@@ -21,7 +23,7 @@ Widget buildTextField(String label, {IconData? suffixIcon}) {
               borderSide: BorderSide.none),
           suffixIcon: suffixIcon != null ? Icon(suffixIcon) : null,
           suffixIconColor: AppColors.greyScale.grey500),
-      style: AppTextStyles.urbanist.semiBold(
+      style: sl<UrbanistTextStyles>().semiBold(
         color: AppColors.greyScale.grey900,
         fontSize: 14,
       ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../di/service_locator.dart';
 import '../../../utils/responsiveness/app_responsive.dart';
-import '../../../utils/textstyles/app_textstyles.dart';
 import '../../constants/colors/app_colors.dart';
+import '../../textstyles/urbanist_textstyles.dart';
 
 class CustomTextFieldWg extends StatelessWidget {
   final bool isFocused;
@@ -43,8 +44,7 @@ class CustomTextFieldWg extends StatelessWidget {
       child: TextField(
         obscureText: obscureText,
         keyboardType: TextInputType.text,
-        style: AppTextStyles.urbanist
-            .semiBold(color: AppColors.greyScale.grey900, fontSize: 14),
+        style: sl<UrbanistTextStyles>().semiBold(color: AppColors.greyScale.grey900, fontSize: 14),
         controller: controller,
         focusNode: focusNode,
         decoration: InputDecoration(
@@ -56,7 +56,7 @@ class CustomTextFieldWg extends StatelessWidget {
                 isFocused ? AppColors.primary() : AppColors.greyScale.grey500,
           ),
           hintText: hintText,
-          hintStyle: AppTextStyles.urbanist.medium(
+          hintStyle: sl<UrbanistTextStyles>().medium(
             color: AppColors.greyScale.grey400,
             fontSize: 14,
           ),

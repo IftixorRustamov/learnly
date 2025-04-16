@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
-import 'package:kursol/core/utils/textstyles/urbanist_textstyles.dart';
 
 import '../../../../core/common/constants/colors/app_colors.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
 
 class MentorProfilePage extends StatefulWidget {
   const MentorProfilePage({super.key});

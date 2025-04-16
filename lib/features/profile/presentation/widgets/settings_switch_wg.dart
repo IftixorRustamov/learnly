@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/constants/constants_export.dart';
+import '../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../core/utils/utils_export.dart';
 
 class SettingsSwitchWg extends StatelessWidget {
@@ -22,7 +25,7 @@ class SettingsSwitchWg extends StatelessWidget {
       children: [
         Text(
           text,
-          style: AppTextStyles.urbanist.semiBold(
+          style: sl<UrbanistTextStyles>().semiBold(
             color: AppColors.greyScale.grey900,
             fontSize: 18,
           ),

@@ -8,6 +8,9 @@ import 'package:kursol/core/common/widgets/textfield/custom_text_field_wg.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 
 import '../../../../../core/common/constants/constants_export.dart';
+import '../../../../../core/common/textstyles/urbanist_textstyles.dart';
+import '../../../../../core/di/service_locator.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../core/utils/utils_export.dart';
 import '../../widgets/auth_checkbox_wg.dart';
 import '../../widgets/auth_or_continue_with_wg.dart';
@@ -63,8 +66,7 @@ class _SignInPageState extends State<SignInPage> {
               Text(AppStrings.loginToYourAccount,
                   maxLines: 2,
                   textAlign: TextAlign.left,
-                  style: AppTextStyles.urbanist
-                      .bold(color: AppColors.greyScale.grey900, fontSize: 48)),
+                  style: sl<UrbanistTextStyles>().bold(color: AppColors.greyScale.grey900, fontSize: 48)),
               Column(
                 spacing: appH(24),
                 children: [
@@ -119,7 +121,7 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       child: Text(
                         AppStrings.forgotPassword,
-                        style: AppTextStyles.urbanist.semiBold(
+                        style: sl<UrbanistTextStyles>().semiBold(
                             color: AppColors.primary.blue500, fontSize: 16),
                       )),
                 ],

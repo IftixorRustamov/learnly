@@ -4,7 +4,10 @@ import 'package:kursol/core/enums/languages.dart';
 import 'package:kursol/features/profile/presentation/pages/language/widgets/language_radio_wg.dart';
 
 import '../../../../../core/common/constants/constants_export.dart';
+import '../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../core/common/widgets/widgets_export.dart';
+import '../../../../../core/di/service_locator.dart';
+import '../../../../../core/utils/responsiveness/app_responsive.dart';
 import '../../../../../core/utils/utils_export.dart';
 
 class ProfileLanguagePage extends StatelessWidget {
@@ -72,7 +75,7 @@ class ProfileLanguagePage extends StatelessWidget {
 
 Widget _text(String text) => Text(
       text,
-      style: AppTextStyles.urbanist.bold(
+      style: sl<UrbanistTextStyles>().bold(
         color: AppColors.greyScale.grey900,
         fontSize: 20,
       ),
