@@ -17,7 +17,7 @@ abstract class AuthRepository {
   Future<ApiResponse<void>> resetPasswordViaEmail(String email);
 
   //? (POST /v1/auth/register/phone)
-  Future<ApiResponse> registerWithPhone(
+  Future<ApiResponse<UserEntity>> registerWithPhone(
     String phoneNumber,
     String password,
     String firstName,
@@ -25,7 +25,7 @@ abstract class AuthRepository {
   );
 
   //? (POST /v1/auth/register/email)
-  Future<ApiResponse> registerWithEmail(
+  Future<ApiResponse<UserEntity>> registerWithEmail(
     String email,
     String password,
     String firstName,

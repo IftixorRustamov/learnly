@@ -15,8 +15,9 @@ class DioClient {
         connectTimeout: const Duration(milliseconds: 15000),
         receiveTimeout: const Duration(milliseconds: 15000),
         responseType: ResponseType.json,
+        // contentType: "application/json",
         headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
+          //HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
           // HttpHeaders.authorizationHeader: 'Bearer ${AppConstants.apiToken}', // token
         },
       ),

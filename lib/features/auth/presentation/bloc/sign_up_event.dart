@@ -19,7 +19,7 @@ class SignupSubmitted extends SignupEvent {
     required this.lastName,
     required this.emailOrPhone,
     required this.password,
-    this.useEmail = true,
+    this.useEmail = false,
   });
 
   @override

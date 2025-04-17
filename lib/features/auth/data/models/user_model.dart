@@ -15,31 +15,31 @@ class UserModel extends UserEntity {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] as String,
+      id: json['uuid'] as String,
       email: json['email'] as String,
       phoneNumber: json['phone_number'] as String?,
-      firstName: json['first_name'] as String,
-      lastName: json['last_name'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
       username: json['username'] as String,
       roles: List<String>.from(json['roles'] as List),
-      skillOccupation: json['skill_occupation'] as bool,
+      skillOccupation: json['skillOccupation'] as bool,
       biography: json['biography'] as String?,
-      registrationDate: DateTime.parse(json['registration_date'] as String),
+      registrationDate: DateTime.parse(json['registrationDate'] as String),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'uuid': id,
       'email': email,
       'phone_number': phoneNumber,
-      'first_name': firstName,
-      'last_name': lastName,
+      'firstName': firstName,
+      'lastName': lastName,
       'username': username,
       'roles': roles,
-      'skill_occupation': skillOccupation,
+      'skillOccupation': skillOccupation,
       'biography': biography,
-      'registration_date': registrationDate.toIso8601String(),
+      'registrationDate': registrationDate.toIso8601String(),
     };
   }
 }

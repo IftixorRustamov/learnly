@@ -8,8 +8,6 @@ part 'sign_up_event.dart';
 
 part 'sign_up_state.dart';
 
-
-
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final AuthRepository authRepository;
 
@@ -17,15 +15,12 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<SignupSubmitted>(_onSignupSubmitted);
   }
 
-
-
   Future<void> _onSignupSubmitted(
       SignupSubmitted event, Emitter<SignupState> emit) async {
     emit(SignupLoading());
 
-
-
     try {
+
       final ApiResponse response;
       if (event.useEmail) {
         response = await authRepository.registerWithEmail(
@@ -34,6 +29,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           event.firstName,
           event.lastName,
         );
+
       } else {
         response = await authRepository.registerWithPhone(
           event.emailOrPhone,

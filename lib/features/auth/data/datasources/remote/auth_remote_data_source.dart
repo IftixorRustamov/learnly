@@ -1,15 +1,16 @@
 import 'package:kursol/features/auth/data/models/api_response_model.dart';
 import 'package:kursol/features/auth/data/models/token_model.dart';
+import 'package:kursol/features/auth/data/models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<TokenModel> login(String username, String password);
 
   Future<void> logout();
 
-  Future<ApiResponseModel> registerWithEmail(
+  Future<UserModel> registerWithEmail(
       String email, String password, String firstName, String lastName);
 
-  Future<ApiResponseModel> registerWithPhone(
+  Future<UserModel> registerWithPhone(
       String phoneNumber, String password, String firstName, String lastName);
 
   Future<TokenModel> refreshToken(String refreshToken);

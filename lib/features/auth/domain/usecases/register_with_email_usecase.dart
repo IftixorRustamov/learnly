@@ -7,7 +7,7 @@ class RegisterWithEmailUsecase {
 
   RegisterWithEmailUsecase(this._authRepository);
 
-  Future<ApiResponse> call(
+  Future<ApiResponse<UserEntity>> call(
     String email,
     String password,
     String firstName,

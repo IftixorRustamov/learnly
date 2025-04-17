@@ -1,4 +1,5 @@
 import 'package:kursol/features/auth/data/datasources/remote/auth_remote_data_source.dart';
+import 'package:kursol/features/auth/data/models/user_model.dart';
 import 'package:kursol/features/auth/domain/entities/api_response_entity.dart';
 import 'package:kursol/features/auth/domain/entities/token_entity.dart';
 import 'package:kursol/features/auth/domain/entities/user_entity.dart';
@@ -46,12 +47,12 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<ApiResponse> registerWithEmail(
+  Future<ApiResponse<UserEntity>> registerWithEmail(
       String email, String password, String firstName, String lastName) async {
     try {
-      final response = remoteDataSource.registerWithEmail(
+      final response = await remoteDataSource.registerWithEmail(
           email, password, firstName, lastName);
-      // local database
+      // local database ********
 
       return ApiResponse(success: true, data: response);
     } catch (e) {
@@ -63,6 +64,23 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
+  @override
+  Future<ApiResponse<UserEntity>> registerWithPhone(String phoneNumber,
+      String password, String firstName, String lastName) async {
+    try {
+      final userModel = await remoteDataSource.registerWithPhone(
+          phoneNumber, password, firstName, lastName);
+      return ApiResponse(success: true, data: userModel);
+    } catch (e) {
+      return ApiResponse(
+        success: false,
+        error: ApiResponseErrorEntity(
+          code: 'REGISTER_FAILED',
+          message: 'Registration failed',
+        ),
+      );
+    }
+  }
 
   @override
   UserEntity? getCurrentUser() {
@@ -86,24 +104,6 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<ApiResponse<TokenEntity>> refreshToken(String refreshToken) {
     // TODO: implement refreshToken
     throw UnimplementedError();
-  }
-
-  @override
-  Future<ApiResponse> registerWithPhone(String phoneNumber, String password,
-      String firstName, String lastName) async {
-    try {
-      final userModel = await remoteDataSource.registerWithPhone(
-          phoneNumber, password, firstName, lastName);
-      return ApiResponse(success: true, data: userModel);
-    } catch (e) {
-      return ApiResponse(
-        success: false,
-        error: ApiResponseErrorEntity(
-          code: 'REGISTER_FAILED',
-          message: 'Registration failed',
-        ),
-      );
-    }
   }
 
   @override

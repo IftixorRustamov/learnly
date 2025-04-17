@@ -4,6 +4,7 @@ import 'package:kursol/core/network/dio_client.dart';
 import 'package:kursol/features/auth/data/datasources/remote/auth_remote_data_source.dart';
 import 'package:kursol/features/auth/data/models/api_response_model.dart';
 import 'package:kursol/features/auth/data/models/token_model.dart';
+import 'package:kursol/features/auth/data/models/user_model.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final DioClient dioClient;
@@ -43,7 +44,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<ApiResponseModel> registerWithEmail(
+  Future<UserModel> registerWithEmail(
       String email, String password, String firstName, String lastName) async {
     try {
       final response = await dioClient.post(
@@ -57,7 +58,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
-        return ApiResponseModel.fromJson(response.data);
+        return UserModel.fromJson(response.data);
       } else {
         throw Exception(_parseError(response));
       }
@@ -67,11 +68,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<ApiResponseModel> registerWithPhone(String phoneNumber,
-      String password, String firstName, String lastName) async {
+  Future<UserModel> registerWithPhone(String phoneNumber, String password,
+      String firstName, String lastName) async {
     try {
       final response = await dioClient.post(
-        '/register/phone',
+        ApiUrls.registerPhone,
         data: {
           'phone_number': phoneNumber,
           'password': password,
@@ -79,8 +80,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'last_name': lastName,
         },
       );
-      if (response.statusCode == 201) {
-        return ApiResponseModel.fromJson(response.data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return UserModel.fromJson(response.data);
       } else {
         throw Exception(_parseError(response));
       }

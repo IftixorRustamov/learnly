@@ -7,6 +7,7 @@ import 'package:kursol/core/common/sizes/sizes.dart';
 import 'package:kursol/core/common/textstyles/urbanist_textstyles.dart';
 import 'package:kursol/core/common/widgets/widgets_export.dart';
 import 'package:kursol/core/di/service_locator.dart';
+import 'package:kursol/core/routes/route_names.dart';
 import 'package:kursol/core/routes/route_paths.dart';
 import 'package:kursol/core/utils/responsiveness/app_responsive.dart';
 import 'package:kursol/features/auth/presentation/widgets/auth_checkbox_wg.dart';
@@ -33,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final FocusNode _emailOrPhoneFocusNode = FocusNode();
   bool _rememberMe = false;
   bool _obscureText = true;
-  bool _useEmail = true;
+  bool _useEmail = false;
 
   @override
   void initState() {
@@ -88,6 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _submitSignup(BuildContext context) {
     final errorMessage = _validateForm();
+
     if (errorMessage == null) {
       context.read<SignupBloc>().add(SignupSubmitted(
             firstName: _firstNameController.text.trim(),
@@ -110,139 +112,120 @@ class _SignUpPageState extends State<SignUpPage> {
         context.go(RoutePaths.auth);
       }),
       backgroundColor: AppColors.white,
-      body: BlocListener<SignupBloc, SignupState>(
-        listener: (context, state) {
-          if (state is SignupLoading) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          } else {
-            Navigator.of(context, rootNavigator: true)
-                .popUntil((route) => route.isFirst);
-          }
-
-          if (state is SignupSuccess) {
-            context.go(RoutePaths.home);
-          } else if (state is SignupFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
-            );
-          }
-        },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: scaffoldPadding24,
-            child: Column(
-              spacing: appH(20),
-              children: [
-                Text(
-                  AppStrings.createYourAccount,
-                  maxLines: 2,
-                  textAlign: TextAlign.left,
-                  style: sl<UrbanistTextStyles>().bold(
-                    color: AppColors.greyScale.grey900,
-                    fontSize: 48,
-                  ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: scaffoldPadding24,
+          child: Column(
+            spacing: appH(20),
+            children: [
+              Text(
+                AppStrings.createYourAccount,
+                maxLines: 2,
+                textAlign: TextAlign.left,
+                style: sl<UrbanistTextStyles>().bold(
+                  color: AppColors.greyScale.grey900,
+                  fontSize: 48,
                 ),
-                Column(
-                  spacing: appH(16),
-                  children: [
-                    CustomTextFieldWg(
-                      isFocused: _firstNameFocusNode.hasFocus,
-                      controller: _firstNameController,
-                      focusNode: _firstNameFocusNode,
-                      prefixIcon: IconlyBold.profile,
-                      hintText: AppStrings.firstName,
-                    ),
-                    CustomTextFieldWg(
-                      isFocused: _lastNameFocusNode.hasFocus,
-                      controller: _lastNameController,
-                      focusNode: _lastNameFocusNode,
-                      prefixIcon: IconlyBold.profile,
-                      hintText: AppStrings.lastName,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: appH(10),
-                      children: [
-                        CustomTextFieldWg(
-                          isFocused: _emailOrPhoneFocusNode.hasFocus,
-                          controller: _emailOrPhoneController,
-                          focusNode: _emailOrPhoneFocusNode,
-                          prefixIcon:
-                              _useEmail ? IconlyBold.message : IconlyBold.call,
-                          hintText: _useEmail
-                              ? AppStrings.email
-                              : AppStrings.phoneNumber,
-                        ),
-                        GestureDetector(
-                          onTap: _toggleInputMode,
-                          child: Text(
-                            _useEmail
-                                ? 'Use phone instead'
-                                : 'Use email instead',
-                            style: sl<UrbanistTextStyles>().semiBold(
-                              color: AppColors.primary(),
-                              fontSize: 14,
-                            ),
+              ),
+              Column(
+                spacing: appH(16),
+                children: [
+                  CustomTextFieldWg(
+                    isFocused: _firstNameFocusNode.hasFocus,
+                    controller: _firstNameController,
+                    focusNode: _firstNameFocusNode,
+                    prefixIcon: IconlyBold.profile,
+                    hintText: AppStrings.firstName,
+                  ),
+                  CustomTextFieldWg(
+                    isFocused: _lastNameFocusNode.hasFocus,
+                    controller: _lastNameController,
+                    focusNode: _lastNameFocusNode,
+                    prefixIcon: IconlyBold.profile,
+                    hintText: AppStrings.lastName,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: appH(10),
+                    children: [
+                      CustomTextFieldWg(
+                        isFocused: _emailOrPhoneFocusNode.hasFocus,
+                        controller: _emailOrPhoneController,
+                        focusNode: _emailOrPhoneFocusNode,
+                        prefixIcon:
+                            _useEmail ? IconlyBold.message : IconlyBold.call,
+                        hintText: _useEmail
+                            ? AppStrings.email
+                            : AppStrings.phoneNumber,
+                      ),
+                      GestureDetector(
+                        onTap: _toggleInputMode,
+                        child: Text(
+                          _useEmail ? 'Use phone instead' : 'Use email instead',
+                          style: sl<UrbanistTextStyles>().semiBold(
+                            color: AppColors.primary(),
+                            fontSize: 14,
                           ),
                         ),
-                      ],
-                    ),
-                    CustomTextFieldWg(
-                      isFocused: _passwordFocusNode.hasFocus,
-                      obscureText: _obscureText,
-                      controller: _passwordController,
-                      focusNode: _passwordFocusNode,
-                      prefixIcon: IconlyBold.lock,
-                      hintText: AppStrings.password,
-                      trailingWidget: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                        icon: Icon(
-                          _obscureText ? IconlyBold.hide : IconlyBold.show,
-                          size: appH(20),
-                          color: _passwordFocusNode.hasFocus
-                              ? AppColors.primary()
-                              : AppColors.greyScale.grey500,
-                        ),
                       ),
-                    ),
-                    AuthCheckboxWg(
-                      rememberMe: _rememberMe,
-                      onChanged: (value) {
+                    ],
+                  ),
+                  CustomTextFieldWg(
+                    isFocused: _passwordFocusNode.hasFocus,
+                    obscureText: _obscureText,
+                    controller: _passwordController,
+                    focusNode: _passwordFocusNode,
+                    prefixIcon: IconlyBold.lock,
+                    hintText: AppStrings.password,
+                    trailingWidget: IconButton(
+                      onPressed: () {
                         setState(() {
-                          _rememberMe = value!;
+                          _obscureText = !_obscureText;
                         });
                       },
+                      icon: Icon(
+                        _obscureText ? IconlyBold.hide : IconlyBold.show,
+                        size: appH(20),
+                        color: _passwordFocusNode.hasFocus
+                            ? AppColors.primary()
+                            : AppColors.greyScale.grey500,
+                      ),
                     ),
-                    DefaultButtonWg(
-                      title: AppStrings.signUp,
-                      onPressed: () => _submitSignup(context),
-                    ),
-                  ],
-                ),
-                AuthOrContinueWithWg(
-                  onTapFacebook: () {},
-                  onTapGoogle: () {},
-                  onTapApple: () {},
-                ),
-                AuthSignInUpChoiceWg(
-                  text: AppStrings.alreadyHaveAccount,
-                  onPressed: () {
-                    context.go(RoutePaths.signin);
-                  },
-                  buttonText: AppStrings.signIn,
-                ),
-              ],
-            ),
+                  ),
+                  AuthCheckboxWg(
+                    rememberMe: _rememberMe,
+                    onChanged: (value) {
+                      setState(() {
+                        _rememberMe = value!;
+                      });
+                    },
+                  ),
+                  BlocConsumer<SignupBloc, SignupState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        if (state is SignupLoading) {
+                          return CircularProgressIndicator();
+                        }
+                        return DefaultButtonWg(
+                          title: AppStrings.signUp,
+                          onPressed: () => _submitSignup(context),
+                        );
+                      }),
+                ],
+              ),
+              AuthOrContinueWithWg(
+                onTapFacebook: () {},
+                onTapGoogle: () {},
+                onTapApple: () {},
+              ),
+              AuthSignInUpChoiceWg(
+                text: AppStrings.alreadyHaveAccount,
+                onPressed: () {
+                  context.go(RoutePaths.signin);
+                },
+                buttonText: AppStrings.signIn,
+              ),
+            ],
           ),
         ),
       ),

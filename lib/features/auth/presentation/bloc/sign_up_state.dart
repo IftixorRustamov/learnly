@@ -7,9 +7,13 @@ abstract class SignupState extends Equatable {
   List<Object> get props => [];
 }
 
-class SignupInitial extends SignupState {}
+class SignupInitial extends SignupState {
+  const SignupInitial();
+}
 
-class SignupLoading extends SignupState {}
+class SignupLoading extends SignupState {
+  const SignupLoading();
+}
 
 class SignupSuccess extends SignupState {
   final UserEntity user;
@@ -23,7 +27,9 @@ class SignupSuccess extends SignupState {
 class SignupFailure extends SignupState {
   final String errorMessage;
 
-  const SignupFailure({required this.errorMessage});
+  const SignupFailure({
+    required this.errorMessage,
+  });
 
   @override
   List<Object> get props => [errorMessage];
