@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kursol/core/utils/logger/app_logger.dart';
+import 'package:kursol/features/auth/presentation/pages/forget_reset_password/pages/forgot_password_screen.dart';
 import 'package:kursol/features/home/features/bookmark/bookmark_page.dart';
 import 'package:kursol/features/home/features/courses/popular_courses.dart';
 import 'package:kursol/features/home/features/home_page.dart';
@@ -19,7 +20,6 @@ import 'package:kursol/features/transaction/pages/e_receipt_page.dart';
 import 'package:kursol/features/transaction/pages/transactions_page.dart';
 import '../../features/auth/presentation/pages/auth_pages_export.dart';
 import '../../features/auth/presentation/pages/forget_reset_password/pages/create_new_password.dart';
-import '../../features/auth/presentation/pages/forget_reset_password/pages/forgot_password.dart';
 import '../../features/auth/presentation/pages/forget_reset_password/pages/send_code_forgot_password.dart';
 import '../../features/auth/presentation/pages/profile/pages/create_new_pin.dart';
 import '../../features/auth/presentation/pages/profile/pages/fill_your_profile.dart';
@@ -70,6 +70,22 @@ final GoRouter appRouter = GoRouter(
       path: RoutePaths.signin,
       name: RouteNames.signin,
       builder: (context, state) => const SignInPage(),
+    ),
+
+    // * Create new pin
+    GoRoute(
+      path: RoutePaths.createNewPin,
+      name: RouteNames.createNewPin,
+      builder: (context, state) => const CreateNewPin(),
+    ),
+
+    // * Forgot Password Phone
+    GoRoute(
+      path: RoutePaths.forgotPassword,
+      name: RouteNames.forgotPassword,
+      builder: (context, state) {
+        return const ForgotPasswordScreen();
+      },
     ),
 
     ShellRoute(
@@ -311,13 +327,6 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: RoutePaths.createNewPin,
-      name: RouteNames.createNewPin,
-      builder: (context, state) {
-        return CreateNewPin();
-      },
-    ),
-    GoRoute(
       path: RoutePaths.fingerPrint,
       name: RouteNames.fingerPrint,
       builder: (context, state) {
@@ -325,13 +334,7 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     // forgotPassword
-    GoRoute(
-      path: RoutePaths.forgotPassword,
-      name: RouteNames.forgotPassword,
-      builder: (context, state) {
-        return ForgotPassword();
-      },
-    ),
+
     GoRoute(
       path: RoutePaths.sendCodeForgotPassword,
       name: RouteNames.sendCodeForgotPassword,

@@ -1,6 +1,7 @@
+import 'package:dartz/dartz.dart';
+import 'package:kursol/core/exceptions/network/network_exception.dart';
 import 'package:kursol/features/auth/domain/entities/user_entity.dart';
 
-import '../entities/api_response_entity.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterWithPhoneUseCase {
@@ -8,7 +9,7 @@ class RegisterWithPhoneUseCase {
 
   RegisterWithPhoneUseCase(this._authRepository);
 
-  Future<ApiResponse> call(
+  Future<Either<NetworkException, UserEntity>> call(
     String phoneNumber,
     String password,
     String firstName,

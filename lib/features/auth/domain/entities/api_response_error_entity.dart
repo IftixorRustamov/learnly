@@ -1,6 +1,6 @@
 class ApiResponseErrorEntity {
-  final String code;
-  final String message;
+  final String? code;
+  final String? message;
   final Map<String, dynamic>? details;
 
   ApiResponseErrorEntity({

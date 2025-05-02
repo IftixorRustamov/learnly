@@ -6,5 +6,8 @@ abstract class ApiUrls {
   static final logout = "${baseURL}v1/auth/logout";
   static final login = "${baseURL}v1/auth/login";
   static final registerEmail = "v1/auth/register/email";
-  static final registerPhone = "v1/auth/register/phone";
+  static final otp = "${baseURL}v1/auth/register-otp-verification";
+  static final registerPhone = "${baseURL}v1/auth/register/phone";
+  static final resetPasswordOtp = "${baseURL}v1/auth/reset-password-otp-verification";
+  static final refreshToken = "${baseURL}v1/auth/refresh-token";
 }

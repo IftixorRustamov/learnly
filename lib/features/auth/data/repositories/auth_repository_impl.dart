@@ -1,133 +1,125 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:kursol/core/exceptions/network/network_exception.dart';
+import 'package:kursol/features/auth/data/datasources/local/token_storage.dart';
 import 'package:kursol/features/auth/data/datasources/remote/auth_remote_data_source.dart';
-import 'package:kursol/features/auth/data/models/user_model.dart';
-import 'package:kursol/features/auth/domain/entities/api_response_entity.dart';
-import 'package:kursol/features/auth/domain/entities/token_entity.dart';
+import 'package:kursol/features/auth/data/mappers/api_response_data_mapper.dart';
+import 'package:kursol/features/auth/data/mappers/otp_response_user_mapper.dart';
+import 'package:kursol/features/auth/data/mappers/user_mapper.dart';
+import 'package:kursol/features/auth/domain/entities/api_response_data_entity.dart';
+import 'package:kursol/features/auth/domain/entities/otp_response_user_entity.dart';
+import 'package:kursol/features/auth/domain/entities/otp_verify_response_entity.dart';
 import 'package:kursol/features/auth/domain/entities/user_entity.dart';
 import 'package:kursol/features/auth/domain/repositories/auth_repository.dart';
 
-import '../../domain/entities/api_response_error_entity.dart';
-
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final TokenStorage tokenStorage;
 
-  AuthRepositoryImpl({required this.remoteDataSource});
-
-  @override
-  Future<ApiResponse<TokenEntity>> login(
-      String username, String password) async {
-    try {
-      final tokenModel = await remoteDataSource.login(username, password);
-      // local storage... here
-      return ApiResponse(success: true, data: tokenModel.toEntity());
-    } catch (e) {
-      return ApiResponse(
-        success: false,
-        error: ApiResponseErrorEntity(
-          code: 'LOGIN_FAILED',
-          message: 'Login failed',
-        ),
-      );
-    }
+  AuthRepositoryImpl(
+      {required this.remoteDataSource, required this.tokenStorage}) {
+    tokenStorage.init();
   }
 
   @override
-  Future<ApiResponse<void>> logout() async {
-    try {
-      await remoteDataSource.logout();
-      return ApiResponse(success: true);
-    } catch (e) {
-      return ApiResponse(
-        success: false,
-        error: ApiResponseErrorEntity(
-          code: 'LOGOUT_FAILED',
-          message: 'Logout failed',
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<ApiResponse<UserEntity>> registerWithEmail(
-      String email, String password, String firstName, String lastName) async {
-    try {
-      final response = await remoteDataSource.registerWithEmail(
-          email, password, firstName, lastName);
-      // local database ********
-
-      return ApiResponse(success: true, data: response);
-    } catch (e) {
-      return ApiResponse(
-          success: false,
-          error: ApiResponseErrorEntity(
-              code: "REGISTER_EMAIL_FAILED",
-              message: "register failed try again"));
-    }
-  }
-
-  @override
-  Future<ApiResponse<UserEntity>> registerWithPhone(String phoneNumber,
-      String password, String firstName, String lastName) async {
+  Future<Either<NetworkException, UserEntity>> registerWithPhone(
+      String phoneNumber,
+      String password,
+      String firstName,
+      String lastName) async {
     try {
       final userModel = await remoteDataSource.registerWithPhone(
           phoneNumber, password, firstName, lastName);
-      return ApiResponse(success: true, data: userModel);
-    } catch (e) {
-      return ApiResponse(
-        success: false,
-        error: ApiResponseErrorEntity(
-          code: 'REGISTER_FAILED',
-          message: 'Registration failed',
-        ),
-      );
+
+      final userEntity = userModel.toEntity();
+
+      return Right(userEntity);
+    } on DioException catch (e) {
+      return Left(NetworkException.fromDioError(e));
     }
   }
 
   @override
-  UserEntity? getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
+  Future<Either<NetworkException, OtpVerifyResponseEntity>> verifyOtp(
+      {required String otpCode, required String userId}) async {
+    try {
+      final responseModel =
+          await remoteDataSource.verifyOtp(otpCode: otpCode, userId: userId);
+      final responseEntity = OtpVerifyResponseEntity(
+        success: responseModel.success,
+        message: responseModel.message,
+      );
+      return Right(responseEntity);
+    } on DioException catch (e) {
+      return Left(NetworkException.fromDioError(e));
+    }
   }
 
   @override
-  Future<ApiResponse<TokenEntity>> getGrantCode(String grantCode) {
-    // TODO: implement getGrantCode
-    throw UnimplementedError();
+  Future<Either<NetworkException, ApiResponseDataEntity>> login(
+      {required String username, required String password}) async {
+    try {
+      final responseModel =
+          await remoteDataSource.login(username: username, password: password);
+
+      await tokenStorage.saveTokens(
+          responseModel.accessToken, responseModel.refreshToken);
+
+      final responseEntity = responseModel.toEntity();
+      return Right(responseEntity);
+    } on DioException catch (e) {
+      return Left(NetworkException.fromDioError(e));
+    }
   }
 
   @override
-  bool isUserLoggedIn() {
-    // TODO: implement isUserLoggedIn
-    throw UnimplementedError();
+  Future<Either<NetworkException, OtpVerifyResponseEntity>> resetPasswordOtp(
+      {required String userId, required String otp}) async {
+    try {
+      final responseModel =
+          await remoteDataSource.resetPasswordOtp(userId: userId, otp: otp);
+
+      final responseEntity = OtpVerifyResponseEntity(
+          success: responseModel.success,
+          error: responseModel.error,
+          message: responseModel.message,
+          data: responseModel.data?.toEntity());
+
+      return Right(responseEntity);
+    } on DioException catch (e) {
+      return Left(NetworkException.fromDioError(e));
+    }
   }
 
   @override
-  Future<ApiResponse<TokenEntity>> refreshToken(String refreshToken) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+  Future<Either<NetworkException, OtpVerifyResponseEntity>>
+      resetPasswordViaPhone({required String phone}) async {
+    try {
+      final responseModel =
+          await remoteDataSource.resetPasswordViaPhone(phone: phone);
+
+      final responseEntity = OtpVerifyResponseEntity(
+          success: responseModel.success, message: responseModel.message);
+      return Right(responseEntity);
+    } on DioException catch (e) {
+      return Left(NetworkException.fromDioError(e));
+    }
   }
 
   @override
-  Future<ApiResponse<void>> resetPassword(
-      String otpCode, List<String> newPassword, List<String> confirmPassword) {
-    // TODO: implement resetPassword
-    throw UnimplementedError();
-  }
+  Future<Either<NetworkException, ApiResponseDataEntity>> refreshToken(
+      {required String refreshToken}) async {
+    try {
+      final responseModel =
+          await remoteDataSource.refreshToken(refreshToken: refreshToken);
 
-  @override
-  Future<ApiResponse<void>> resetPasswordViaEmail(String email) {
-    // TODO: implement resetPasswordViaEmail
-    throw UnimplementedError();
-  }
+      await tokenStorage.saveTokens(
+          responseModel.accessToken, responseModel.refreshToken);
 
-  @override
-  Future<ApiResponse<void>> resetPasswordViaPhone(String phone) {
-    // TODO: implement resetPasswordViaPhone
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<ApiResponse<void>> verifyOtp(String otpCode) {
-    // TODO: implement verifyOtp
-    throw UnimplementedError();
+      final responseEntity = responseModel.toEntity();
+      return Right(responseEntity);
+    } on DioException catch (e) {
+      return Left(NetworkException.fromDioError(e));
+    }
   }
 }

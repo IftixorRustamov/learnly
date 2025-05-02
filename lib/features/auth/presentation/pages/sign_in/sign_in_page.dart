@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
 import 'package:kursol/core/common/sizes/sizes.dart';
@@ -6,6 +7,7 @@ import 'package:kursol/core/common/widgets/app_bar/action_app_bar_wg.dart';
 import 'package:kursol/core/common/widgets/default_button_wg.dart';
 import 'package:kursol/core/common/widgets/textfield/custom_text_field_wg.dart';
 import 'package:kursol/core/routes/route_paths.dart';
+import 'package:kursol/features/auth/presentation/bloc/login/login_bloc.dart';
 
 import '../../../../../core/common/constants/constants_export.dart';
 import '../../../../../core/common/textstyles/urbanist_textstyles.dart';
@@ -52,89 +54,119 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 
+  void _verifyLogin(BuildContext context) {
+    context.read<LoginBloc>().add(LoginButtonPressed(
+        username: _emailController.text, password: _passwordController.text));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ActionAppBarWg(onBackPressed: () {}),
-      backgroundColor: AppColors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: scaffoldPadding48,
-          child: Column(
-            spacing: appH(48),
-            children: [
-              Text(AppStrings.loginToYourAccount,
-                  maxLines: 2,
-                  textAlign: TextAlign.left,
-                  style: sl<UrbanistTextStyles>().bold(color: AppColors.greyScale.grey900, fontSize: 48)),
-              Column(
-                spacing: appH(24),
+    return BlocProvider<LoginBloc>(
+      create: (_) => sl<LoginBloc>(),
+      child: Builder(
+        builder: (context) => Scaffold(
+          appBar: ActionAppBarWg(onBackPressed: () {}),
+          backgroundColor: AppColors.white,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: scaffoldPadding48,
+              child: Column(
+                spacing: appH(48),
                 children: [
-                  CustomTextFieldWg(
-                      isFocused: _isFocusedEmail,
-                      controller: _emailController,
-                      focusNode: _emailFocusNode,
-                      prefixIcon: IconlyBold.message,
-                      hintText: AppStrings.email,
-                      onTap: () {
-                        setState(() {
-                          _isFocusedEmail = true;
-                        });
-                      }),
-                  CustomTextFieldWg(
-                      isFocused: _isFocusedPassword,
-                      obscureText: true,
-                      controller: _passwordController,
-                      focusNode: _passwordFocusNode,
-                      prefixIcon: IconlyBold.lock,
-                      hintText: AppStrings.password,
-                      trailingWidget: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          IconlyBold.hide,
-                          size: appH(20),
-                          color: _isFocusedPassword
-                              ? AppColors.primary()
-                              : AppColors.greyScale.grey500,
-                        ),
+                  Text(AppStrings.loginToYourAccount,
+                      maxLines: 2,
+                      textAlign: TextAlign.left,
+                      style: sl<UrbanistTextStyles>().bold(
+                          color: AppColors.greyScale.grey900, fontSize: 48)),
+                  Column(
+                    spacing: appH(24),
+                    children: [
+                      CustomTextFieldWg(
+                          isFocused: _isFocusedEmail,
+                          controller: _emailController,
+                          focusNode: _emailFocusNode,
+                          prefixIcon: IconlyBold.call,
+                          hintText: AppStrings.email,
+                          onTap: () {
+                            setState(() {
+                              _isFocusedEmail = true;
+                            });
+                          }),
+                      CustomTextFieldWg(
+                          isFocused: _isFocusedPassword,
+                          obscureText: true,
+                          controller: _passwordController,
+                          focusNode: _passwordFocusNode,
+                          prefixIcon: IconlyBold.lock,
+                          hintText: AppStrings.password,
+                          trailingWidget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              IconlyBold.hide,
+                              size: appH(20),
+                              color: _isFocusedPassword
+                                  ? AppColors.primary()
+                                  : AppColors.greyScale.grey500,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _isFocusedPassword = true;
+                            });
+                          }),
+                      AuthCheckboxWg(
+                          rememberMe: _rememberMe,
+                          onChanged: (value) {
+                            setState(() {
+                              _rememberMe = value!;
+                            });
+                          }),
+                      BlocConsumer<LoginBloc, LoginState>(
+                        listener: (context, state) {
+                          if (state is LoginSuccess) {
+                            context.go(RoutePaths.home);
+                          } else if (state is LoginFailure) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                                backgroundColor: AppColors.red,
+                              ),
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is LoginLoading) {
+                            return CircularProgressIndicator();
+                          }
+                          return DefaultButtonWg(
+                              title: AppStrings.signIn,
+                              onPressed: () => _verifyLogin(context));
+                        },
                       ),
-                      onTap: () {
-                        setState(() {
-                          _isFocusedPassword = true;
-                        });
-                      }),
-                  AuthCheckboxWg(
-                      rememberMe: _rememberMe,
-                      onChanged: (value) {
-                        setState(() {
-                          _rememberMe = value!;
-                        });
-                      }),
-                  DefaultButtonWg(
-                      title: AppStrings.signIn,
+                      TextButton(
+                          onPressed: () {
+                            context.go(RoutePaths.forgotPassword);
+                          },
+                          child: Text(
+                            AppStrings.forgotPassword,
+                            style: sl<UrbanistTextStyles>().semiBold(
+                                color: AppColors.primary.blue500, fontSize: 16),
+                          )),
+                    ],
+                  ),
+                  AuthOrContinueWithWg(
+                      onTapFacebook: () {},
+                      onTapGoogle: () {},
+                      onTapApple: () {}),
+                  AuthSignInUpChoiceWg(
+                      text: AppStrings.dontHaveAccount,
                       onPressed: () {
-                        context.go(RoutePaths.home);
-                      }),
-                  TextButton(
-                      onPressed: () {
-                        context.go(RoutePaths.forgotPassword);
+                        context.go(RoutePaths.signup);
                       },
-                      child: Text(
-                        AppStrings.forgotPassword,
-                        style: sl<UrbanistTextStyles>().semiBold(
-                            color: AppColors.primary.blue500, fontSize: 16),
-                      )),
+                      buttonText: AppStrings.signUp),
                 ],
               ),
-              AuthOrContinueWithWg(
-                  onTapFacebook: () {}, onTapGoogle: () {}, onTapApple: () {}),
-              AuthSignInUpChoiceWg(
-                  text: AppStrings.dontHaveAccount,
-                  onPressed: () {
-                    context.go(RoutePaths.signup);
-                  },
-                  buttonText: AppStrings.signUp),
-            ],
+            ),
           ),
         ),
       ),

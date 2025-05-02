@@ -1,8 +1,8 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:kursol/core/common/constants/api_urls.dart';
+import 'package:kursol/core/network/interceptors.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioClient {
@@ -17,18 +17,25 @@ class DioClient {
         responseType: ResponseType.json,
         // contentType: "application/json",
         headers: {
-          //HttpHeaders.contentTypeHeader: ContentType.json.mimeType,
+          'Content-Type': 'application/json',
           // HttpHeaders.authorizationHeader: 'Bearer ${AppConstants.apiToken}', // token
         },
       ),
     );
 
-    _dio.interceptors.add(
+    _dio.interceptors.addAll([
+      LoggerInterceptor(),
       PrettyDioLogger(
         compact: false,
-        logPrint: (object) => log(object.toString(), name: 'TMDB API'),
+        requestHeader: true,
+        // Log request headers
+        requestBody: true,
+        responseBody: true,
+        // Log response body
+        error: true,
+        logPrint: (object) => log(object.toString(), name: 'KURSOL API'),
       ),
-    );
+    ]);
   }
 
   // GET

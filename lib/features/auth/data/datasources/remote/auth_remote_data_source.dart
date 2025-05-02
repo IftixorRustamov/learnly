@@ -1,28 +1,21 @@
-import 'package:kursol/features/auth/data/models/api_response_model.dart';
-import 'package:kursol/features/auth/data/models/token_model.dart';
-import 'package:kursol/features/auth/data/models/user_model.dart';
+import 'package:kursol/features/auth/data/models/api_response_data/api_response_data_model.dart';
+import 'package:kursol/features/auth/data/models/otp_verify_response_model.dart';
+import 'package:kursol/features/auth/data/models/user_model/user_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<TokenModel> login(String username, String password);
-
-  Future<void> logout();
-
-  Future<UserModel> registerWithEmail(
-      String email, String password, String firstName, String lastName);
-
   Future<UserModel> registerWithPhone(
       String phoneNumber, String password, String firstName, String lastName);
 
-  Future<TokenModel> refreshToken(String refreshToken);
+  Future<OtpVerifyResponseModel> verifyOtp(
+      {required String otpCode, required String userId});
 
-  Future<TokenModel> getGrantCode(String grantCode);
+  Future<ApiResponseDataModel> login(
+      {required String username, required String password});
 
-  Future<void> resetPassword(
-      String otpCode, List<String> newPassword, List<String> confirmPassword);
+  Future<OtpVerifyResponseModel> resetPasswordViaPhone({required String phone});
 
-  Future<void> resetPasswordViaEmail(String email);
+  Future<OtpVerifyResponseModel> resetPasswordOtp(
+      {required String userId, required String otp});
 
-  Future<void> resetPasswordViaPhone(String phone);
-
-  Future<void> verifyOtp(String otpCode);
+  Future<ApiResponseDataModel> refreshToken({required String refreshToken});
 }

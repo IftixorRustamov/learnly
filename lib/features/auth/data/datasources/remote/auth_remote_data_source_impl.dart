@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:kursol/core/common/constants/api_urls.dart';
 import 'package:kursol/core/network/dio_client.dart';
-import 'package:kursol/features/auth/data/datasources/remote/auth_remote_data_source.dart';
-import 'package:kursol/features/auth/data/models/api_response_model.dart';
-import 'package:kursol/features/auth/data/models/token_model.dart';
-import 'package:kursol/features/auth/data/models/user_model.dart';
+import 'package:kursol/features/auth/data/models/api_response_data/api_response_data_model.dart';
+import 'package:kursol/features/auth/data/models/otp_verify_response_model.dart';
+import 'package:kursol/features/auth/data/models/user_model/user_model.dart';
+
+import 'auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final DioClient dioClient;
@@ -12,209 +13,135 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.dioClient});
 
   @override
-  Future<TokenModel> login(String username, String password) async {
-    try {
-      final response = await dioClient.post(
-        '/login',
-        data: {
-          'username': username,
-          'password': password,
-        },
-      );
-      if (response.statusCode == 200) {
-        return TokenModel.fromJson(response.data);
-      } else {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<void> logout() async {
-    try {
-      final response = await dioClient.post('/logout');
-      if (response.statusCode != 200) {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<UserModel> registerWithEmail(
-      String email, String password, String firstName, String lastName) async {
-    try {
-      final response = await dioClient.post(
-        ApiUrls.registerEmail,
-        data: {
-          'email': email,
-          'password': password,
-          'first_name': firstName,
-          'last_name': lastName,
-        },
-      );
-
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        return UserModel.fromJson(response.data);
-      } else {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
   Future<UserModel> registerWithPhone(String phoneNumber, String password,
       String firstName, String lastName) async {
     try {
+      final requestBody = {
+        'phoneNumber': phoneNumber,
+        'firstName': firstName,
+        'lastName': lastName,
+        "password": password
+      };
       final response = await dioClient.post(
         ApiUrls.registerPhone,
-        data: {
-          'phone_number': phoneNumber,
-          'password': password,
-          'first_name': firstName,
-          'last_name': lastName,
-        },
+        data: requestBody,
       );
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        return UserModel.fromJson(response.data);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final responseData = response.data as Map<String, dynamic>;
+        if (responseData['success'] == true && responseData['data'] != null) {
+          return UserModel.fromJson(responseData['data']);
+        } else {
+          throw DioException(
+            requestOptions: response.requestOptions,
+            response: response,
+            type: DioExceptionType.badResponse,
+            error:
+                'Invalid response format: success is false or data is missing',
+          );
+        }
       } else {
-        throw Exception(_parseError(response));
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          type: DioExceptionType.badResponse,
+        );
       }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<TokenModel> refreshToken(String refreshToken) async {
-    try {
-      final response = await dioClient.post(
-        '/refresh-token',
-        data: {
-          'refresh_token': refreshToken,
-        },
-      );
-      if (response.statusCode == 200) {
-        return TokenModel.fromJson(response.data);
-      } else {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<TokenModel> getGrantCode(String grantCode) async {
-    try {
-      final response = await dioClient.get(
-        '/grant-code',
-        queryParameters: {'code': grantCode},
-      );
-      if (response.statusCode == 200) {
-        return TokenModel.fromJson(response.data);
-      } else {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<void> resetPassword(String otpCode, List<String> newPassword,
-      List<String> confirmPassword) async {
-    try {
-      final response = await dioClient.put(
-        '/reset-password',
-        data: {
-          'otp_code': otpCode,
-          'new_password': newPassword,
-          'confirm_password': confirmPassword,
-        },
-      );
-      if (response.statusCode != 200) {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<void> resetPasswordViaEmail(String email) async {
-    try {
-      final response = await dioClient.post(
-        '/reset-password/email',
-        data: {
-          'email': email,
-        },
-      );
-      if (response.statusCode != 200) {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<void> resetPasswordViaPhone(String phone) async {
-    try {
-      final response = await dioClient.post(
-        '/reset-password/phone',
-        data: {
-          'phone': phone,
-        },
-      );
-      if (response.statusCode != 200) {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  @override
-  Future<void> verifyOtp(String otpCode) async {
-    try {
-      final response = await dioClient.post(
-        '/otp-verification',
-        data: {
-          'otp_code': otpCode,
-        },
-      );
-      if (response.statusCode != 200) {
-        throw Exception(_parseError(response));
-      }
-    } on DioException catch (e) {
-      throw Exception(_parseDioError(e));
-    }
-  }
-
-  String _parseError(Response response) {
-    try {
-      final errorJson = response.data;
-      return errorJson['message'] ?? 'Unknown error occurred';
     } catch (_) {
-      return 'Server error: ${response.statusCode}';
+      rethrow;
     }
   }
 
-  String _parseDioError(DioException e) {
-    if (e.response != null && e.response!.data != null) {
-      try {
-        final errorJson = e.response!.data;
-        return errorJson['message'] ?? 'Unknown error occurred';
-      } catch (_) {
-        return 'Server error: ${e.response?.statusCode}';
+  @override
+  Future<OtpVerifyResponseModel> verifyOtp(
+      {required String otpCode, required String userId}) async {
+    try {
+      final requestBody = {
+        'otp': otpCode,
+        'userId': userId,
+      };
+
+      final response = await dioClient.post(ApiUrls.otp, data: requestBody);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.data;
+        return OtpVerifyResponseModel.fromJson(data);
+      } else {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          error: 'Error verifying OTP',
+        );
       }
+    } catch (_) {
+      rethrow;
     }
-    return e.message ?? 'Network error occurred';
+  }
+
+  @override
+  Future<ApiResponseDataModel> login(
+      {required String username, required String password}) async {
+    try {
+      final requestBody = {
+        'username': username,
+        'password': password,
+      };
+
+      final response = await dioClient.post(ApiUrls.login, data: requestBody);
+
+      final data = response.data['data'];
+
+      return ApiResponseDataModel.fromJson(data);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<OtpVerifyResponseModel> resetPasswordViaPhone(
+      {required String phone}) async {
+    try {
+      final response = await dioClient.post(
+        ApiUrls.resetPasswordPhone,
+        queryParameters: {"phone": phone},
+      );
+
+      final data = response.data;
+
+      return OtpVerifyResponseModel.fromJson(data);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ApiResponseDataModel> refreshToken(
+      {required String refreshToken}) async {
+    try {
+      final response = await dioClient
+          .post(ApiUrls.refreshToken, data: {"refreshToken": refreshToken});
+      final data = response.data;
+      return ApiResponseDataModel.fromJson(data);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<OtpVerifyResponseModel> resetPasswordOtp(
+      {required String userId, required String otp}) async {
+    try {
+      final requestBody = {
+        'otp': otp,
+        'userId': userId,
+      };
+
+      final response =
+          await dioClient.post(ApiUrls.resetPasswordOtp, data: requestBody);
+
+      return OtpVerifyResponseModel.fromJson(response.data);
+    } catch (_) {
+      rethrow;
+    }
   }
 }

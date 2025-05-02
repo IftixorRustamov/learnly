@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kursol/core/routes/route_paths.dart';
+import 'package:kursol/features/auth/domain/entities/otp_response_user_entity.dart';
+import 'package:kursol/features/auth/presentation/bloc/otp_verify/otp_verify_bloc.dart';
 
 import '../../../../../../core/common/constants/constants_export.dart';
 import '../../../../../../core/common/textstyles/urbanist_textstyles.dart';
 import '../../../../../../core/common/widgets/widgets_export.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/utils/responsiveness/app_responsive.dart';
-import '../../../../../../core/utils/utils_export.dart';
 
 class CreateNewPin extends StatefulWidget {
   const CreateNewPin({super.key});
@@ -17,115 +20,112 @@ class CreateNewPin extends StatefulWidget {
 }
 
 class _CreateNewPinState extends State<CreateNewPin> {
-  List<TextEditingController> controllers =
-      List.generate(4, (_) => TextEditingController());
-  List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
+  OtpResponseUserEntity? user;
+  String? _otpCode;
 
   @override
-  void dispose() {
-    for (var controller in controllers) {
-      controller.dispose();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (user == null) {
+      final extra = GoRouterState.of(context).extra;
+      if (extra == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Error: No userId provided")),
+        );
+        context.go(RoutePaths.signup);
+        return;
+      }
+      if (extra is! String) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content:
+                  Text("Error: Expected String, got ${extra.runtimeType}")),
+        );
+        context.go(RoutePaths.signup);
+        return;
+      }
+      user = OtpResponseUserEntity(userId: extra);
     }
-    for (var node in focusNodes) {
-      node.dispose();
-    }
-    super.dispose();
   }
 
-  void _onKeyPress(String value, int index) {
-    if (value.isNotEmpty && index < 3) {
-      FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+  void _verifyOtp(BuildContext context) {
+    if (_otpCode == null || _otpCode!.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter the 6-digit OTP code")),
+      );
+      return;
     }
-  }
 
-  void _onBackspace(int index) {
-    if (index > 0 && controllers[index].text.isEmpty) {
-      FocusScope.of(context).requestFocus(focusNodes[index - 1]);
-    }
+    context.read<OtpVerifyBloc>().add(
+          OtpVerifyRequested(
+            otpCode: _otpCode!,
+            userId: user!.userId,
+          ),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: ActionAppBarWg(
-        onBackPressed: () {
-          context.go(RoutePaths.fillYourProfile);
-        },
-        titleText: AppStrings.createNewPin,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: appH(80),
-          children: [
-            Text(
-              AppStrings.addPinNumber,
-              textAlign: TextAlign.center,
-              style: sl<UrbanistTextStyles>().regular(color: AppColors.greyScale.grey900, fontSize: 18),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(4, (index) {
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: appW(83),
-                      height: appH(63),
-                      decoration: BoxDecoration(
-                        color: focusNodes[index].hasFocus
-                            ? AppColors.primary.blue100
-                            : AppColors.greyScale.grey50,
-                        borderRadius: BorderRadius.circular(appH(12)),
-                        border: Border.all(
-                          color: focusNodes[index].hasFocus
-                              ? AppColors.primary.blue500
-                              : AppColors.greyScale.grey200,
-                          width: 1,
+    return BlocProvider<OtpVerifyBloc>(
+      create: (_) => sl<OtpVerifyBloc>(),
+      child: Builder(
+          builder: (context) => Scaffold(
+                backgroundColor: AppColors.white,
+                appBar: ActionAppBarWg(
+                  onBackPressed: () {
+                    context.go(RoutePaths.signup);
+                  },
+                  titleText: AppStrings.createNewPin,
+                ),
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: appW(24)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: appH(80),
+                      children: [
+                        Text(
+                          AppStrings.addPinNumber,
+                          textAlign: TextAlign.center,
+                          style: sl<UrbanistTextStyles>().regular(
+                              color: AppColors.greyScale.grey900, fontSize: 18),
                         ),
-                      ),
-                      alignment: Alignment.center,
-                      child: TextField(
-                        controller: controllers[index],
-                        focusNode: focusNodes[index],
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.center,
-                        maxLength: 1,
-                        style: sl<UrbanistTextStyles>().bold(
-                            color: AppColors.greyScale.grey900, fontSize: 24),
-                        decoration: const InputDecoration(
-                          counterText: "",
-                          border: InputBorder.none,
+                        OtpTextField(
+                          onSubmit: (String code) {
+                            setState(() {
+                              _otpCode = code;
+                            });
+                          },
+                          numberOfFields: 6,
+                          obscureText: false,
+                          showFieldAsBox: true,
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            _onKeyPress(value, index);
-                            _onBackspace(index);
-                          });
-                        },
-                      ),
+                        BlocConsumer<OtpVerifyBloc, OtpVerifyState>(
+                            builder: (context, state) {
+                          if (state is OtpVerifyLoading) {
+                            return const CircularProgressIndicator();
+                          }
+                          return DefaultButtonWg(
+                              title: AppStrings.profileContinue,
+                              onPressed: () => _verifyOtp(context));
+                        }, listener: (context, state) {
+                          if (state is OtpVerifySuccess) {
+                            context.go(RoutePaths.home);
+                          } else if (state is OtpVerifyFailure) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                                backgroundColor: AppColors.red,
+                              ),
+                            );
+                          }
+                        }),
+                      ],
                     ),
-                    if (controllers[index].text.isNotEmpty)
-                      Text(
-                        '⚫',
-                        style: sl<UrbanistTextStyles>().bold(
-                            color: AppColors.greyScale.grey900, fontSize: 24),
-                      ),
-                  ],
-                );
-              }),
-            ),
-            DefaultButtonWg(
-                title: AppStrings.profileContinue,
-                onPressed: () {
-                  context.go(RoutePaths.fingerPrint);
-                }),
-          ],
-        ),
-      ),
+                  ),
+                ),
+              )),
     );
   }
 }
